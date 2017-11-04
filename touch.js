@@ -2,8 +2,8 @@
 	//
 	// File scope, shouldn't be used outside the file.
 	//
-	var ongoingTouches = [];
-	var lastDir = [];
+	let ongoingTouches = [];
+	let lastDir = [];
 
 	function copyTouch(touch) {
 		return {
@@ -14,8 +14,8 @@
 	}
 
 	function ongoingTouchIndexById(idToFind) {
-		for (var i = 0; i < ongoingTouches.length; i++) {
-			var id = ongoingTouches[i].identifier;
+		for (let i = 0; i < ongoingTouches.length; i++) {
+			let id = ongoingTouches[i].identifier;
 
 			if (id == idToFind) {
 				return i;
@@ -31,14 +31,14 @@
 
 
 	// Variables used in "generateDirectionEvent".
-	var halfNumSegments = 4; // Controls how accurate the you have to be when draging a direction.
-	var low  = Math.floor(halfNumSegments / 2);
-	var high = Math.ceil(halfNumSegments / 2);
+	let halfNumSegments = 4; // Controls how accurate the you have to be when draging a direction.
+	let low  = Math.floor(halfNumSegments / 2);
+	let high = Math.ceil(halfNumSegments / 2);
 
 	function generateDirectionEvent(id) {
-		var angle = Math.atan2(lastDir[id].x, lastDir[id].y);
+		let angle = Math.atan2(lastDir[id].x, lastDir[id].y);
 		// Maybe rename dir to something more descriptive, sure it's a direction, but what kind of direction?
-		var dir = Math.round((angle / PI) * halfNumSegments);
+		let dir = Math.round((angle / PI) * halfNumSegments);
 
 		direction = "none";
 		if (dir === 0) {
@@ -59,9 +59,9 @@
 	function handleStart(evt) {
 		// I dont want to disable this since it disables all clicks, right?
 		// evt.preventDefault();
-		var touches = evt.changedTouches;
+		let touches = evt.changedTouches;
 
-		for (var i = 0; i < touches.length; i++) {
+		for (let i = 0; i < touches.length; i++) {
 			ongoingTouches.push(copyTouch(touches[i]));
 			lastDir.push({x: 0, y: 0});
 		}
@@ -71,11 +71,11 @@
 
 	function handleEnd(evt) {
 		evt.preventDefault();
-		var touches = evt.changedTouches;
+		let touches = evt.changedTouches;
 
 
-		for (var i = 0; i < touches.length; i++) {
-			var idx = ongoingTouchIndexById(touches[i].identifier);
+		for (let i = 0; i < touches.length; i++) {
+			let idx = ongoingTouchIndexById(touches[i].identifier);
 
 			if (idx >= 0) {
 				generateDirectionEvent(idx);
@@ -88,9 +88,9 @@
 
 	function handleCancel(evt) {
 		evt.preventDefault();
-		var touches = evt.changedTouches;
+		let touches = evt.changedTouches;
 
-		for (var i = 0; i < touches.length; i++) {
+		for (let i = 0; i < touches.length; i++) {
 			removeOngoingTouche(i);
 		}
 	}
@@ -99,10 +99,10 @@
 
 	function handleMove(evt) {
 		evt.preventDefault();
-		var touches = evt.changedTouches;
+		let touches = evt.changedTouches;
 
-		for (var i = 0; i < touches.length; i++) {
-			var idx = ongoingTouchIndexById(touches[i].identifier);
+		for (let i = 0; i < touches.length; i++) {
+			let idx = ongoingTouchIndexById(touches[i].identifier);
 			strokeWeight(10);
 
 			if (debug) {
